@@ -32,8 +32,16 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Validate input fields
+    if (!email?.trim() || !password?.trim()) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    // Normalize email
+    const normalizedEmail = email.toLowerCase().trim();
+
     // Check if user exists
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: normalizedEmail });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -41,14 +49,35 @@ exports.login = async (req, res) => {
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(403).json({ message: "Invalid credentials" });
     }
 
-    // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    // Check if JWT secret is available
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET is missing in environment variables!");
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
 
-    res.status(200).json({ token });
+    console.log("JWT_SECRET:", process.env.JWT_SECRET); // Debugging
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        fullName: user.fullName, // Add other user details if needed
+      },
+    });
+    
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Login Error:", error.message || error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

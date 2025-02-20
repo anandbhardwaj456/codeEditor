@@ -1,0 +1,43 @@
+.login-container {
+    max-width: 350px;
+    margin: 100px auto;
+    padding: 20px;
+    background: #242424;
+    border: 1px solid #1f65e6;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  h2 {
+    color: #afec3f;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    background: #474747;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background: #1f65e6;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background: #0e4bb5;
+  }
+  
+  .error {
+    color: red;
+    font-size: 14px;
+  }
+  
