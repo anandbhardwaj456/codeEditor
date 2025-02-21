@@ -1,35 +1,48 @@
 .navbar {
     display: flex;
     align-items: center;
-    padding-left: 20px;
-    height: 50px;
-    text-align: center;
+    justify-content: space-between; /* Ensures proper spacing */
+    padding: 0 20px;
+    height: 60px; /* Increased height for better visibility */
+    background-color: #474747;
     color: #afec3f;
-    background-color: #474747;
-    gap: 20px;
+    font-size: 20px;
 }
 
-#no {
-    height: 36px;
-    width: 80px;
-    font-size: 16px;
-    color: rgb(185, 185, 185);
-    border: 1px solid #afec3f;
-    border-radius: 4px;
-    background-color: #474747;
+/* Navbar Title */
+.navbar h1 {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
 }
 
-#no:focus {
-    outline: none;
-}
-
+/* Dropdown Select Styling */
 .css-2b097c-container {
-    width: 120px;
+    width: 130px;
     color: black;
     background-color: #474747;
 }
 
+/* Fixes for react-select dropdown */
 .css-yk16xz-control {
     background-color: #474747 !important;
     border-color: #afec3f !important;
+}
+
+/* Font Size Slider */
+.navbar input[type="range"] {
+    margin-left: 10px;
+    width: 120px;
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 1366px) {
+    .navbar {
+        height: 50px;
+        font-size: 18px;
+    }
+    
+    .css-2b097c-container {
+        width: 110px;
+    }
 }

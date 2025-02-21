@@ -20,6 +20,7 @@ function App() {
     // Fetch authentication status on mount
     useEffect(() => {
         const token = localStorage.getItem("token");
+        console.log("Fetched Token from LocalStorage:", token);
         setIsAuthenticated(!!token);
     }, []);
 
@@ -29,24 +30,34 @@ function App() {
     const compile = async () => {
         if (!userCode) return;
         setLoading(true);
-
+    
+        const token = localStorage.getItem("token");  
+        console.log("Sending request to backend...");
+    
         try {
-            const res = await Axios.post("http://localhost:8000/api/compile", {
+            const res = await Axios.post("http://localhost:8000/compile", {
                 code: userCode,
                 language: userLang,
                 input: userInput,
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
             });
-
+    
+            console.log("Response received:", res.data);
             setUserOutput(res.data.stdout || res.data.stderr);
         } catch (err) {
-            console.error(err);
-            setUserOutput("Error: " + (err.response ? err.response.data.error : err.message));
+            console.error("Compile Error:", err.response?.data || err.message);
+            setUserOutput("Error: " + (err.response?.data?.error || err.message));
         } finally {
             setLoading(false);
         }
     };
+    
 
-    const clearOutput = () => setUserOutput("");
+    const clearOutput = () => {
+        console.log("Clearing output");
+        setUserOutput("");
+    };
 
     return (
         <Router>
