@@ -4,6 +4,7 @@ import Axios from "axios";
 import Editor from "@monaco-editor/react";
 import Navbar from "../src/components/Navbar";
 import LoginPage from "../src/components/LoginPage";
+import RegisterPage from "../src/components/RegisterPage";
 import spinner from "./spinner.svg";
 import "./App.css";
 
@@ -52,7 +53,6 @@ function App() {
             setLoading(false);
         }
     };
-    
 
     const clearOutput = () => {
         console.log("Clearing output");
@@ -64,6 +64,7 @@ function App() {
             <Routes>
                 {/* Redirect authenticated users to the compiler */}
                 <Route path="/" element={isAuthenticated ? <Navigate to="/compiler" /> : <LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
                 <Route
                     path="/compiler"
                     element={

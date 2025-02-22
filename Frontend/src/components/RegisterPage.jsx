@@ -1,19 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 
-const LoginPage = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+const RegisterPage = () => {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/compiler"); // Redirect to compiler if already logged in
-    }
-  }, [navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,16 +21,16 @@ const LoginPage = () => {
     setError("");
     setLoading(true);
 
-    if (!formData.email.trim() || !formData.password.trim()) {
+    if (!formData.fullName.trim() || !formData.email.trim() || !formData.password.trim()) {
       setError("All fields are required!");
       setLoading(false);
       return;
     }
 
-    console.log("Attempting login with:", formData);
+    console.log("Registering user with:", formData);
 
     try {
-      const response = await fetch("http://localhost:8000/api/users/login", {
+      const response = await fetch("http://localhost:8000/api/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -44,16 +41,16 @@ const LoginPage = () => {
       console.log("Response data:", data);
 
       if (!response.ok) {
-        throw new Error(data.message || "Login failed!");
+        throw new Error(data.message || "Registration failed!");
       }
 
       localStorage.setItem("token", data.token);
       console.log("Token stored in localStorage");
 
-      alert("Login Successful! 🎉");
-      navigate("/compiler"); // Redirect to code editor
+      alert("Registration Successful! 🎉");
+      navigate("/compiler");
     } catch (err) {
-      console.error("Login error:", err);
+      console.error("Registration error:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -62,9 +59,17 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2>Register</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="fullName"
+          placeholder="Full Name"
+          value={formData.fullName}
+          onChange={handleChange}
+          required
+        />
         <input
           type="email"
           name="email"
@@ -82,14 +87,14 @@ const LoginPage = () => {
           required
         />
         <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Registering..." : "Register"}
         </button>
       </form>
       <p>
-        Don't have an account? <a href="/register">Register</a>
+        Already have an account? <a href="/">Login</a>
       </p>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
