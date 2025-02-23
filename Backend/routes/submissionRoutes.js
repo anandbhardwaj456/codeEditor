@@ -1,7 +1,10 @@
 const express = require("express");
-const router = express.Router();
-const submissionController = require("../controllers/submissionController");
+const { submitCode } = require("../controllers/submissionController");
+const { authMiddleware } = require("../middlewares/authMiddleware");
 
-router.post("/submit", submissionController.submitCode);
+const router = express.Router();
+
+// Change this line
+router.post("/", authMiddleware, submitCode);  // Remove "submissions" from here
 
 module.exports = router;

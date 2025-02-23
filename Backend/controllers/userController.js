@@ -30,54 +30,48 @@ exports.register = async (req, res) => {
 // ✅ Login User
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+      const { email, password } = req.body;
 
-    // Validate input fields
-    if (!email?.trim() || !password?.trim()) {
-      return res.status(400).json({ message: "Email and password are required" });
-    }
+      // Validate input fields
+      if (!email?.trim() || !password?.trim()) {
+          return res.status(400).json({ message: "Email and password are required" });
+      }
 
-    // Normalize email
-    const normalizedEmail = email.toLowerCase().trim();
+      const normalizedEmail = email.toLowerCase().trim();
 
-    // Check if user exists
-    const user = await User.findOne({ email: normalizedEmail });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+      // Check if user exists
+      const user = await User.findOne({ email: normalizedEmail });
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
 
-    // Compare passwords
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(403).json({ message: "Invalid credentials" });
-    }
+      // Compare passwords
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+          return res.status(403).json({ message: "Invalid credentials" });
+      }
 
-    // Check if JWT secret is available
-    if (!process.env.JWT_SECRET) {
-      console.error("JWT_SECRET is missing in environment variables!");
-      return res.status(500).json({ message: "Internal Server Error" });
-    }
+      // Generate JWT token with userId
+      const token = jwt.sign(
+          { 
+              userId: user._id,  // Make sure this matches what submitCode expects
+              email: user.email 
+          },
+          process.env.JWT_SECRET,
+          { expiresIn: "1h" }
+      );
 
-    console.log("JWT_SECRET:", process.env.JWT_SECRET); // Debugging
-
-    // Generate JWT token
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-
-    res.status(200).json({
-      token,
-      user: {
-        id: user._id,
-        email: user.email,
-        fullName: user.fullName, // Add other user details if needed
-      },
-    });
-    
+      res.status(200).json({
+          token,
+          user: {
+              id: user._id,
+              email: user.email,
+              fullName: user.fullName,
+          },
+      });
+      
   } catch (error) {
-    console.error("Login Error:", error.message || error);
-    res.status(500).json({ message: "Internal Server Error" });
+      console.error("Login Error:", error);
+      res.status(500).json({ message: "Internal Server Error" });
   }
 };

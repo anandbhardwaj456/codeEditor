@@ -18,23 +18,21 @@ function App() {
     const [loading, setLoading] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Fetch authentication status on mount
     useEffect(() => {
         const token = localStorage.getItem("token");
-        console.log("Fetched Token from LocalStorage:", token);
         setIsAuthenticated(!!token);
     }, []);
 
     const options = { fontSize };
 
-    // Function to compile code
+    // Function to compile and execute code
     const compile = async () => {
         if (!userCode) return;
         setLoading(true);
-    
-        const token = localStorage.getItem("token");  
-        console.log("Sending request to backend...");
-    
+        
+        const token = localStorage.getItem("token");
+        const startTime = performance.now();
+        
         try {
             const res = await Axios.post("http://localhost:8000/compile", {
                 code: userCode,
@@ -43,26 +41,89 @@ function App() {
             }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-    
-            console.log("Response received:", res.data);
-            setUserOutput(res.data.stdout || res.data.stderr);
+
+            const executionTime = performance.now() - startTime;
+            const output = res.data.stdout || res.data.stderr;
+            setUserOutput(output);
+
+            // Save execution log
+            await saveExecutionLog({
+                language: userLang,
+                executionTime,
+                memoryUsage: res.data.memoryUsage || 0,
+                output,
+                error: res.data.stderr || ""
+            });
+
         } catch (err) {
-            console.error("Compile Error:", err.response?.data || err.message);
+            console.error("Compile Error:", err);
             setUserOutput("Error: " + (err.response?.data?.error || err.message));
         } finally {
             setLoading(false);
         }
     };
 
+    // Function to save execution log
+    const saveExecutionLog = async (logData) => {
+        const token = localStorage.getItem("token");
+        try {
+            await Axios.post("http://localhost:8000/api/execution/logs", logData, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        } catch (err) {
+            console.error("Failed to save execution log:", err);
+        }
+    };
+
+    // Function to handle code submission
+    const handleSubmit = async () => {
+        if (!userCode) {
+            alert("Code cannot be empty!");
+            return;
+        }
+    
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("You need to log in first!");
+            return;
+        }
+    
+        try {
+            console.log("Attempting to submit code...");
+            const response = await Axios.post(
+                "http://localhost:8000/api/submissions",  // This matches our backend route
+                {
+                    code: userCode,
+                    language: userLang,
+                },
+                {
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+    
+            console.log("Submission Response:", response.data);
+            alert("Code submitted successfully!");
+    
+        } catch (error) {
+            console.error("Submission Error:", {
+                status: error.response?.status,
+                data: error.response?.data,
+                message: error.message
+            });
+            alert(`Failed to submit code: ${error.response?.data?.message || error.message}`);
+        }
+    };
+
     const clearOutput = () => {
-        console.log("Clearing output");
         setUserOutput("");
     };
 
     return (
         <Router>
             <Routes>
-                {/* Redirect authenticated users to the compiler */}
                 <Route path="/" element={isAuthenticated ? <Navigate to="/compiler" /> : <LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route
@@ -87,7 +148,10 @@ function App() {
                                             defaultValue="# Enter your code here"
                                             onChange={(value) => setUserCode(value || "")}
                                         />
-                                        <button className="run-btn" onClick={compile}>Run</button>
+                                        <div className="button-container">
+                                            <button className="run-btn" onClick={compile}>Run</button>
+                                            <button className="submit-btn" onClick={handleSubmit}>Submit</button>
+                                        </div>
                                     </div>
                                     <div className="right-container">
                                         <h4>Input:</h4>

@@ -6,41 +6,44 @@ const generateHash = (code) => crypto.createHash("sha256").update(code).digest("
 
 exports.submitCode = async (req, res) => {
   try {
-    const { userId, language, code } = req.body;
+      const { language, code } = req.body;
+      const userId = req.user.userId;  // Extract user ID from JWT token
 
-    // Validate input fields
-    if (!userId || !language || !code) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
+      if (!userId || !language || !code) {
+          return res.status(400).json({ message: "Missing required fields" });
+      }
 
-    // Validate MongoDB ObjectID format
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: "Invalid userId format" });
-    }
+      if (!mongoose.Types.ObjectId.isValid(userId)) {
+          return res.status(400).json({ message: "Invalid userId format" });
+      }
 
-    const codeHash = generateHash(code);
+      const codeHash = generateHash(code);
 
-    // Check for duplicate submissions using .exists() (More efficient)
-    const isDuplicate = await Submission.exists({ userId, hash: codeHash });
-    if (isDuplicate) {
-      return res.status(400).json({ message: "Potential plagiarism detected!" });
-    }
+      // Check for duplicate submissions
+      const isDuplicate = await Submission.exists({ userId, hash: codeHash });
+      if (isDuplicate) {
+          return res.status(400).json({ message: "Potential plagiarism detected!" });
+      }
 
-    // Save new submission
-    const newSubmission = new Submission({
-      userId,
-      language,
-      code,
-      hash: codeHash,
-      status: "Pending",
-    });
+      // Save the new submission
+      const newSubmission = new Submission({
+          userId,
+          language,
+          code,
+          hash: codeHash,
+          status: "Pending",
+          createdAt: new Date(),
+      });
 
-    await newSubmission.save();
+      console.log("Saving new submission:", newSubmission);
+      await newSubmission.save();
+      console.log("Submission saved successfully!");
 
-    res.status(201).json({ message: "Submission received", submissionId: newSubmission._id });
+
+      res.status(201).json({ message: "Submission received", submissionId: newSubmission._id });
 
   } catch (error) {
-    console.error("Code submission error:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+      console.error("Code submission error:", error);
+      res.status(500).json({ message: "Internal Server Error" });
   }
 };

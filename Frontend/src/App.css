@@ -146,3 +146,21 @@ body, html {
     font-size: 16px;
   }
 }
+
+.submit-btn {
+  width: 140px;
+  height: 45px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #1f65e6;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background-color: #174ea6;
+}
