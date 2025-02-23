@@ -1,9 +1,9 @@
 .navbar {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Ensures proper spacing */
+    justify-content: space-between; 
     padding: 0 20px;
-    height: 60px; /* Increased height for better visibility */
+    height: 60px; 
     background-color: #474747;
     color: #afec3f;
     font-size: 20px;
@@ -32,7 +32,7 @@
 /* Font Size Slider */
 .navbar input[type="range"] {
     margin-left: 10px;
-    width: 120px;
+    width: 80px;
 }
 
 /* Adjustments for smaller screens */

@@ -23,10 +23,11 @@ const Navbar = ({ userLang, setUserLang, userTheme,
             <Select options={themes} value={userTheme}
                 onChange={(e) => setUserTheme(e.value)}
                 placeholder={userTheme} />
-            <label>Font Size</label>
+            <label>Font Size
             <input type="range" min="18" max="30"
                 value={fontSize} step="2"
                 onChange={(e) => { setFontSize(e.target.value) }} />
+                </label>
         </div>
     )
 }
