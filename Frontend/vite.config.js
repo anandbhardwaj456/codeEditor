@@ -10,7 +10,7 @@ export default defineConfig({
     allowedHosts: ["codeeditor-3-fy6t.onrender.com"],  // Allow Render deployment
     proxy: {
       "/api": {
-        target: "https://codeeditor-1-ocln.onrender.com/",
+        target: "https://anandcodeeditor.onrender.com/",
         changeOrigin: true,
         secure: false,
       },
