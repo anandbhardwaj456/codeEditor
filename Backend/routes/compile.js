@@ -6,24 +6,31 @@ const router = express.Router();
 router.post("/compile", async (req, res) => {
     try {
         const { code, language, input } = req.body;
+        const userId = req.user ? req.user.userId : null; // Ensure userId is available
 
-        // Send code to Docker-based code executor
-        const executionResponse = await axios.post("http://code-executor:5000/execute", {
+        // Send code to backend executor
+        const executionResponse = await axios.post("https://codeeditor-1-ocln.onrender.com/api/execute", {
             code,
             language,
             input
         });
 
-        // Save execution log
-        const executionLog = new ExecutionLog({
-            userId: req.user.userId,
-            language,
-            code,
-            output: executionResponse.data.output,
-            executionTime: executionResponse.data.executionTime,
-            status: 'completed'
-        });
-        await executionLog.save();
+        if (!executionResponse.data) {
+            return res.status(500).json({ error: "Execution service unavailable" });
+        }
+
+        // Save execution log if user is authenticated
+        if (userId) {
+            const executionLog = new ExecutionLog({
+                userId,
+                language,
+                code,
+                output: executionResponse.data.output,
+                executionTime: executionResponse.data.executionTime,
+                status: 'completed'
+            });
+            await executionLog.save();
+        }
 
         res.json(executionResponse.data);
     } catch (error) {

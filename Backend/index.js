@@ -11,14 +11,16 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 app.use(express.json());
 
-// making MongoDB Connection 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// Making MongoDB Connection with a static URI
+const MONGO_URI = "mongodb+srv://anand193376:Eom4NKGXCcVPKjIM@cluster0.k88tp.mongodb.net/codeeditor";
+
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.error("❌ MongoDB connection error:", err));
 
 // Importing Routes
 app.use("/api/users", require("./routes/userRoutes"));
-app.use("/api/submissions", require("./routes/submissionRoutes")); 
+app.use("/api/submissions", require("./routes/submissionRoutes"));
 app.use("/api/execution", require("./routes/executionLogRoutes"));
 app.use("/api/compile", require("./routes/compile"));
 
