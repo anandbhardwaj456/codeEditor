@@ -34,7 +34,7 @@ function App() {
         const startTime = performance.now();
         
         try {
-            const res = await Axios.post("http://localhost:8000/compile", {
+            const res = await Axios.post("https://codeeditor-1-ocln.onrender.com/compile", {
                 code: userCode,
                 language: userLang,
                 input: userInput,
@@ -67,7 +67,7 @@ function App() {
     const saveExecutionLog = async (logData) => {
         const token = localStorage.getItem("token");
         try {
-            await Axios.post("http://localhost:8000/api/execution/logs", logData, {
+            await Axios.post("https://codeeditor-1-ocln.onrender.com/api/execution/logs", logData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
         } catch (err) {
@@ -91,7 +91,7 @@ function App() {
         try {
             console.log("Attempting to submit code...");
             const response = await Axios.post(
-                "http://localhost:8000/api/submissions",  // This matches our backend route
+                "https://codeeditor-1-ocln.onrender.com/api/submissions",  // This matches our backend route
                 {
                     code: userCode,
                     language: userLang,
