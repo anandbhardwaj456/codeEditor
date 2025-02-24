@@ -1,5 +1,5 @@
 
-# Code EditorProject
+# Code Editor Project
 
  A secure, multi-language online code execution platform with real-time feedback and sandboxed execution..
 
@@ -28,12 +28,15 @@
 Frontend:
 
 React – Modern UI with a smooth developer experience.
+
 Monaco Editor – Feature-rich multi-tab code editor.
 
 Backend:
 
 Node.js with Express / FastAPI – Scalable and efficient API.
+
 Docker – Isolated code execution environment.
+
 MongoDB – Secure and scalable database storage.
 
 ## Authors
