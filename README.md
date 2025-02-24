@@ -1,7 +1,7 @@
 
 # Code EditorProject
 
- A secure, multi-language online code execution platform with real-time feedback and sandboxed execution.
+ A secure, multi-language online code execution platform with real-time feedback and sandboxed execution..
 
 
 ## ✨Features✨
