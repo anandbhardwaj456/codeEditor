@@ -7,7 +7,10 @@ export default defineConfig({
   server: {
     host: true,  // Allows access from network
     port: 5173,  // Change if needed
-    allowedHosts: ["codeeditor-3-fy6t.onrender.com"],  // Allow Render deployment
+    allowedHosts: [
+      "codeeditor-3-fy6t.onrender.com",
+      "anandcodeeditor.onrender.com"
+    ],  // Add new Render domain
     proxy: {
       "/api": {
         target: "https://anandcodeeditor.onrender.com/",
