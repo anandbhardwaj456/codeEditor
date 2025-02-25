@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Making MongoDB Connection with a static URI
-const MONGO_URI="mongodb+arv://anand193376:Eom4NKGXCcVPKjIM@cluster0.k88tp.mongodb.net/codeeditor";
+const MONGO_URI="mongodb+srv://anand193376:anand@123@codeeditor.wjzso.mongodb.net/?retryWrites=true&w=majority&appName=CodeEditor";
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("✅ MongoDB Connected"))
