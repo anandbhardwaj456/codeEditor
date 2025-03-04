@@ -1,0 +1,61 @@
+/* Navbar Container */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: linear-gradient(145deg, #2a2a2a, #222);
+    color: #afec3f;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-in-out;
+}
+
+
+/* Dropdowns & Inputs */
+.navbar select,
+.navbar input {
+    background-color: #333;
+    color: white;
+    border: 1px solid #afec3f;
+    padding: 8px;
+    border-radius: 5px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s;
+}
+
+.navbar select:focus,
+.navbar input:focus {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px rgba(175, 236, 63, 0.8);
+}
+
+/* Interactive Hover Effect */
+.navbar h1 {
+    transition: transform 0.2s ease-in-out;
+}
+
+.navbar h1:hover {
+    transform: scale(1.1);
+    text-shadow: 0px 0px 10px rgba(175, 236, 63, 0.7);
+}
+
+/* Logout Button */
+.logout-btn {
+    background: linear-gradient(90deg, #ff4c4c, #ff6b6b);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.logout-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 5px 15px rgba(255, 76, 76, 0.5);
+}
+
+.logout-btn:active {
+    transform: scale(0.95);
+}

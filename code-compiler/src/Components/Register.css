@@ -1,0 +1,141 @@
+/* Register Container */
+.auth-container {
+    width: 350px;
+    margin: 60px auto;
+    text-align: center;
+    background: linear-gradient(145deg, #252526, #1e1e1e);
+    padding: 35px;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4), -5px -5px 15px rgba(255, 255, 255, 0.05);
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.auth-container:hover {
+    transform: perspective(800px) rotateX(5deg) rotateY(-5deg);
+}
+
+/* Title with Glowing Effect */
+.auth-container h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #ff6b6b, #ff4c4c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 1.5s infinite alternate;
+}
+
+/* Floating Labels */
+.auth-container .input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.auth-container .input-group label {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    color: #888;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.auth-container input {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #1e1e1e;
+    color: white;
+    width: 100%;
+    font-size: 16px;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.auth-container input:focus {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 15px rgba(255, 76, 76, 0.8);
+    outline: none;
+}
+
+.auth-container input:focus + label,
+.auth-container input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #ff4c4c;
+}
+
+/* Register Button with Ripple Effect */
+.auth-container button {
+    background: linear-gradient(90deg, #ff4c4c, #ff6b6b);
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    width: 100%;
+    box-shadow: 0px 4px 10px rgba(255, 76, 76, 0.5);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ripple Animation */
+.auth-container button:after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 40%);
+    transform: scale(0);
+    transition: transform 0.5s ease-out;
+}
+
+.auth-container button:active:after {
+    transform: scale(1);
+}
+
+.auth-container button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 5px 15px rgba(255, 76, 76, 0.7);
+}
+
+.auth-container button:active {
+    transform: scale(0.95);
+    box-shadow: inset 0px 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Links */
+.auth-container p {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.auth-container p a {
+    color: #ff4c4c;
+    text-decoration: none;
+    transition: text-shadow 0.3s ease-in-out;
+}
+
+.auth-container p a:hover {
+    text-shadow: 0px 0px 10px rgba(255, 76, 76, 0.8);
+}
+
+/* Glowing Animation */
+@keyframes glow {
+    from {
+        text-shadow: 0px 0px 10px rgba(255, 76, 76, 0.5);
+    }
+    to {
+        text-shadow: 0px 0px 20px rgba(255, 76, 76, 1);
+    }
+}

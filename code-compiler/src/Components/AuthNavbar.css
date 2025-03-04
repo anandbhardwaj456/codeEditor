@@ -1,0 +1,29 @@
+/* Minimal Navbar for Login/Register Pages */
+.auth-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #333;
+    color: white;
+    font-size: 18px;
+}
+
+.auth-navbar h1 {
+    font-size: 22px;
+    color: #afec3f;
+}
+
+.auth-navbar .nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.auth-navbar .nav-links a {
+    color: #afec3f;
+    text-decoration: none;
+}
+
+.auth-navbar .nav-links a:hover {
+    color: #ffffff;
+}

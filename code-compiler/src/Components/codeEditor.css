@@ -1,0 +1,168 @@
+/* 🌟 Editor Container - Centered & Modern */
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 1022px;
+    margin: 30px auto;
+    background-color: #1e1e1e;
+    color: #afec3f;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 255, 0, 0.2);
+}
+
+/* 📝 Input Box */
+.input-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.input-container h4 {
+    margin-bottom: 8px;
+    color: #58d68d;
+    font-size: 16px;
+}
+
+.input-container textarea {
+    width: 100%;
+    height: 80px;
+    background: #2c2c2c;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 12px;
+    resize: vertical;
+    font-size: 15px;
+    transition: border 0.3s ease-in-out;
+}
+
+.input-container textarea:focus {
+    border: 1px solid #58d68d;
+    outline: none;
+}
+
+/* 🚀 Run Button - Modern & Smooth */
+.run-btn {
+    background: linear-gradient(90deg, #007acc, #005f99);
+    color: white;
+    border: none;
+    padding: 0px 25px;
+    cursor: pointer;
+    margin-top: 18px;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: bold;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s;
+    box-shadow: 0px 5px 12px rgba(0, 123, 204, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.run-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 5px 18px rgba(0, 123, 204, 0.6);
+}
+
+.run-btn:active {
+    transform: scale(0.95);
+}
+
+/* 📜 Output Box */
+.output-container {
+    width: 100%;
+    background: #2a2a2a;
+    color: #afec3f;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 15px;
+    line-height: 1.6;
+    border-left: 6px solid #afec3f;
+    box-shadow: inset 0 0 5px rgba(175, 236, 63, 0.4);
+}
+
+/* 📖 Logs Container - Scrollable & Clear */
+.logs-container {
+    width: 100%;
+    margin-top: 22px;
+    background: #252525;
+    padding: 12px;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 15px;
+    line-height: 1.5;
+    max-height: 260px;
+    overflow-y: auto;
+    border-left: 6px solid #007acc;
+    box-shadow: inset 0 0 5px rgba(0, 123, 204, 0.4);
+}
+
+/* 🔖 Section Headers */
+.logs-container h4 {
+    margin-bottom: 8px;
+    color: #ff9800;
+    font-size: 16px;
+}
+
+/* 📌 Log List */
+.logs-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.logs-container li {
+    background: #333;
+    padding: 12px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    transition: background 0.2s ease-in-out, transform 0.2s;
+    font-size: 14px;
+}
+
+.logs-container li:hover {
+    background: #444;
+    transform: scale(1.02);
+}
+
+/* 🎨 Color-coded Status Badges */
+.log-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+/* ✅ Success - Green */
+.log-status.success {
+    background: #28a745;
+    color: white;
+}
+
+/* ❌ Error - Red */
+.log-status.error {
+    background: #dc3545;
+    color: white;
+}
+
+/* ⏳ Pending - Yellow */
+.log-status.pending {
+    background: #ffc107;
+    color: black;
+}
+
+/* 📜 Submission Logs */
+.submission-code {
+    font-size: 13px;
+    color: #58d68d;
+    background: #222;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 6px;
+}
