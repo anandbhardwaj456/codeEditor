@@ -26,7 +26,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
         process.exit(1);
     });
 
-app.use(cors());
+app.use(cors({ origin: "code-compiler-mi1b3mdpk-anandbhardwaj456s-projects.vercel.app", credentials: true }));
 app.use(express.json());
 
 // ✅ Authentication Routes
